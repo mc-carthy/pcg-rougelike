@@ -27,6 +27,7 @@ public class BoardManager : MonoBehaviour
 	public GameObject[] floorTiles;
 	public GameObject[] wallTiles;
 	public GameObject[] outerWallTiles;
+	public GameObject chestTile;
 	public GameObject exit;
 	private Transform boardHolder;
 	private Dictionary<Vector2, Vector2> gridPositions = new Dictionary<Vector2, Vector2>();
@@ -126,6 +127,12 @@ public class BoardManager : MonoBehaviour
 			toInstantiate = floorTiles [Random.Range (0, floorTiles.Length)];
 			instance = Instantiate (toInstantiate, new Vector3 (tile.Key.x, tile.Key.y, 0f), Quaternion.identity) as GameObject;
 			instance.transform.SetParent (dungeonBoardHolder);
+
+			if (tile.Value == TileType.chest) {
+				toInstantiate = chestTile;
+				instance = Instantiate (toInstantiate, new Vector3 (tile.Key.x, tile.Key.y, 0f), Quaternion.identity) as GameObject;
+				//instance.transform.SetParent (dungeonBoardHolder);
+			}
 		}
 
 		for (int x = -1; x < bound + 1; x++) {

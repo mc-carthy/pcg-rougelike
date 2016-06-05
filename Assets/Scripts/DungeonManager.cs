@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic; 		//Allows us to use Lists.
 using Random = UnityEngine.Random; 		//Tells Random to use the Unity Engine random number generator.
 
-public enum TileType { essential, random, empty }
+public enum TileType { essential, random, empty, chest }
 
 
 
@@ -122,7 +122,11 @@ public class DungeonManager : MonoBehaviour {
 			for (int y = (int)chamberOrigin.y; y < chamberOrigin.y + chamberSize; y++) {
 				Vector2 chamberTilePos = new Vector2 (x, y);
 				if (!gridPositions.ContainsKey (chamberTilePos) && chamberTilePos.x < maxBound && chamberTilePos.x > 0 && chamberTilePos.y < maxBound && chamberTilePos.y > 0) {
-					gridPositions.Add(chamberTilePos, TileType.empty);
+					if (Random.Range(0, 70) == 1) {
+						gridPositions.Add (chamberTilePos, TileType.chest);
+					} else {
+						gridPositions.Add (chamberTilePos, TileType.empty);
+					}
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;	//Allows us to use UI.
 
 //Player inherits from MovingObject, our base class for objects that can move, Enemy also inherits from this.
@@ -14,6 +15,12 @@ public class Player : MovingObject
 	public bool onWorldBoard;
 	public bool dungeonTransition;
 
+	public Image glove;
+	public Image boot;
+
+	public int attackMod = 0, defenseMod = 0;
+	private Dictionary<string, Item> inventory;
+
 
 
 	protected override void Start () {		
@@ -27,6 +34,8 @@ public class Player : MovingObject
 
 		onWorldBoard = true;
 		dungeonTransition = false;
+
+		inventory = new Dictionary<string, Item> ();
 		
 		base.Start ();
 	}
@@ -56,10 +65,11 @@ public class Player : MovingObject
 		//Check if we have a non-zero value for horizontal or vertical
 		if(horizontal != 0 || vertical != 0) {
 			if (!dungeonTransition) {
-
-			//Call AttemptMove passing in the generic parameter Wall, since that is what Player may interact with if they encounter one (by attacking it)
-			//Pass in horizontal and vertical as parameters to specify the direction to move Player in.
-			canMove = AttemptMove<Wall> (horizontal, vertical);
+				if (onWorldBoard) {
+					canMove = AttemptMove<Wall> (horizontal, vertical);
+				} else {
+					canMove = AttemptMove<Chest> (horizontal, vertical);
+				}
 
 				if (canMove && onWorldBoard) {
 					position.x += horizontal;
@@ -86,14 +96,18 @@ public class Player : MovingObject
 	
 	//OnCantMove overrides the abstract function OnCantMove in MovingObject.
 	//It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
-	protected override void OnCantMove <T> (T component)
-	{
-		//Set hitWall to equal the component passed in as a parameter.
-		Wall hitWall = component as Wall;
+	protected override void OnCantMove <T> (T component) {
+		print (typeof(T));
+		if (typeof(T) == typeof(Wall)) {
+			Wall blockingObj = component as Wall;
 		
-		//Call the DamageWall function of the Wall we are hitting.
-		hitWall.DamageWall (wallDamage);
-		
+			//Call the DamageWall function of the Wall we are hitting.
+			blockingObj.DamageWall (wallDamage);
+		} else if (typeof(T) == typeof(Chest)) {
+			Chest blockingObj = component as Chest;
+			print ("OPEN!");
+			blockingObj.Open ();
+		}
 		//Set the attack trigger of the player's animation controller in order to play the player's attack animation.
 		animator.SetTrigger ("playerChop");
 	}
@@ -139,6 +153,36 @@ public class Player : MovingObject
 		}
 	}
 
+	private void UpdateInventory(Collider2D item) {
+		Item itemData = item.GetComponent<Item> ();
+		switch (itemData.type) {
+		case itemType.glove:
+			if (!inventory.ContainsKey ("glove")) {
+				inventory.Add ("glove", itemData);
+			} else {
+				inventory ["glove"] = itemData;
+			}
+			glove.color = itemData.level;
+			break;
+		case itemType.boot:
+			if (!inventory.ContainsKey ("boot")) {
+				inventory.Add ("boot", itemData);
+			} else {
+				inventory ["boot"] = itemData;
+			}
+			boot.color = itemData.level;
+			break;
+		}
+
+		attackMod = 0;
+		defenseMod = 0;
+
+		foreach (KeyValuePair<string, Item> gear in inventory) {
+			attackMod += gear.Value.attackMod;
+			defenseMod += gear.Value.defenseMod;
+		}
+	}
+
 	private void UpdateHealth(Collider2D item) {
 		if (health < 100) {
 			if (item.tag == "Food") {
@@ -158,6 +202,9 @@ public class Player : MovingObject
 			Destroy (other.gameObject);
 		} else if (other.tag == "Food" || other.tag == "Soda") {
 			UpdateHealth (other);
+			Destroy (other.gameObject);
+		} else if (other.tag == "Item") {
+			UpdateInventory (other);
 			Destroy (other.gameObject);
 		}
 	}
