@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -14,31 +13,27 @@ public class GameManager : MonoBehaviour
 	private BoardManager boardScript;
 	private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 	private bool enemiesMoving;								//Boolean to check if enemies are moving.
+	private DungeonManager dungeonScript;
+	private Player playerScript;
 
-	//Awake is always called before any Start functions
-	void Awake()
-	{
-		//Check if instance already exists
-		if (instance == null)
-			
-			//if not, set instance to this
+
+
+
+	void Awake() {
+		if (instance == null) {
 			instance = this;
-		
-		//If instance already exists and it's not this:
-		else if (instance != this)
-			
-			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
-			Destroy(gameObject);	
-		
-		//Sets this to not be destroyed when reloading scene
+		} else if (instance != this) {
+			Destroy (gameObject);	
+		}
 		DontDestroyOnLoad(gameObject);
 		
-		//Assign enemies to a new List of Enemy objects.
 		enemies = new List<Enemy>();
 
 		boardScript = GetComponent<BoardManager> ();
+
+		dungeonScript = GetComponent<DungeonManager> ();
+		playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Player> ();
 		
-		//Call the InitGame function to initialize the first level 
 		InitGame();
 	}
 	
@@ -102,5 +97,30 @@ public class GameManager : MonoBehaviour
 
 	public void UpdateBoard(int horizontal, int vertical) {
 		boardScript.AddToBoard (horizontal, vertical);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void EnterDungeon() {
+		dungeonScript.StartDungeon ();
+		boardScript.SetDungeonBoard (dungeonScript.gridPositions, dungeonScript.maxBound, dungeonScript.endPos);
+		playerScript.dungeonTransition = false;
+	}
+
+	public void ExitDungeon() {
+		boardScript.SetWorldBoard ();
+		playerScript.dungeonTransition = false;
 	}
 }
