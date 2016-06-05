@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{31473E1C-E1F5-423D-7B6B-C0B41A5816FA}") = "PCG_Roguelike", "Assembly-CSharp-firstpass.csproj", "{3BCF2958-4105-E49A-5C90-95D70D242C8F}"
+EndProject
 Project("{31473E1C-E1F5-423D-7B6B-C0B41A5816FA}") = "PCG_Roguelike", "Assembly-CSharp.csproj", "{F6E242F4-5C1C-4151-9795-1FE61B3AFC42}"
 EndProject
 Global
@@ -9,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BCF2958-4105-E49A-5C90-95D70D242C8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BCF2958-4105-E49A-5C90-95D70D242C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BCF2958-4105-E49A-5C90-95D70D242C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BCF2958-4105-E49A-5C90-95D70D242C8F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F6E242F4-5C1C-4151-9795-1FE61B3AFC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F6E242F4-5C1C-4151-9795-1FE61B3AFC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6E242F4-5C1C-4151-9795-1FE61B3AFC42}.Release|Any CPU.ActiveCfg = Release|Any CPU

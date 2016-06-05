@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
 	[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
 
+	private BoardManager boardScript;
 	private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 	private bool enemiesMoving;								//Boolean to check if enemies are moving.
 
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
 		
 		//Assign enemies to a new List of Enemy objects.
 		enemies = new List<Enemy>();
+
+		boardScript = GetComponent<BoardManager> ();
 		
 		//Call the InitGame function to initialize the first level 
 		InitGame();
@@ -51,6 +54,8 @@ public class GameManager : MonoBehaviour
 	{
 		//Clear any Enemy objects in our List to prepare for next level.
 		enemies.Clear();
+
+		boardScript.BoardSetup ();
 	}
 	
 	//Update is called every frame.
@@ -93,5 +98,9 @@ public class GameManager : MonoBehaviour
 
 		//Enemies are done moving, set enemiesMoving to false.
 		enemiesMoving = false;
+	}
+
+	public void UpdateBoard(int horizontal, int vertical) {
+		boardScript.AddToBoard (horizontal, vertical);
 	}
 }
