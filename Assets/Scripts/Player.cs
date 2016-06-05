@@ -139,10 +139,25 @@ public class Player : MovingObject
 		}
 	}
 
+	private void UpdateHealth(Collider2D item) {
+		if (health < 100) {
+			if (item.tag == "Food") {
+				health += Random.Range (1, 4);
+			} else {
+				health += Random.Range (4, 11);
+			}
+			GameManager.instance.healthPoints = health;
+			healthText.text = "Health: " + health;
+		}
+	}
+
 	private void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Exit") {
 			dungeonTransition = true;
 			Invoke ("GoDungeonPortal", 0.5f);
+			Destroy (other.gameObject);
+		} else if (other.tag == "Food" || other.tag == "Soda") {
+			UpdateHealth (other);
 			Destroy (other.gameObject);
 		}
 	}
