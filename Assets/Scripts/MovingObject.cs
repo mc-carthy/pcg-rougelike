@@ -91,6 +91,11 @@ public abstract class MovingObject : MonoBehaviour
 	protected virtual bool AttemptMove <T> (int xDir, int yDir)
 		where T : Component
 	{
+		if (xDir == 1) {
+			transform.eulerAngles = Vector3.zero;
+		} else if (xDir == -1) {
+			transform.eulerAngles = new Vector3 (0, 180, 0);
+		}
 		//Hit will store whatever our linecast hits when Move is called.
 		RaycastHit2D hit;
 		

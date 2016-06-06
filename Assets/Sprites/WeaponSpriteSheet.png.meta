@@ -1,0 +1,282 @@
+fileFormatVersion: 2
+guid: d99ffea43a946437ab64fab3d71369cd
+timeCreated: 1465242551
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: WeaponSpriteSheet_0
+    21300002: WeaponSpriteSheet_1
+    21300004: WeaponSpriteSheet_2
+    21300006: WeaponSpriteSheet_3
+    21300008: WeaponSpriteSheet_4
+    21300010: WeaponSpriteSheet_5
+    21300012: WeaponSpriteSheet_6
+    21300014: WeaponSpriteSheet_7
+    21300016: WeaponSpriteSheet_8
+    21300018: WeaponSpriteSheet_9
+    21300020: WeaponSpriteSheet_10
+    21300022: WeaponSpriteSheet_11
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 32
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: WeaponSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4, y: 32}
+        - {x: -6, y: 28}
+        - {x: -6, y: 15}
+        - {x: -3, y: 9}
+        - {x: 5, y: 9}
+        - {x: 6, y: 12}
+        - {x: 6, y: 27}
+        - {x: 3, y: 32}
+    - name: WeaponSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 32}
+        - {x: -8, y: 32}
+        - {x: -8, y: 22}
+        - {x: -6, y: 13}
+        - {x: -3, y: 9}
+        - {x: 4, y: 9}
+        - {x: 8, y: 20}
+    - name: WeaponSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8, y: 32}
+        - {x: -8, y: 25}
+        - {x: -4, y: 9}
+        - {x: 6, y: 9}
+        - {x: 8, y: 16}
+        - {x: 8, y: 29}
+        - {x: 3, y: 32}
+    - name: WeaponSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 32}
+        - {x: -3, y: 31}
+        - {x: -3, y: 11}
+        - {x: -1, y: 9}
+        - {x: 1, y: 9}
+        - {x: 3, y: 11}
+        - {x: 3, y: 32}
+    - name: WeaponSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8, y: 13}
+        - {x: -8, y: 8}
+        - {x: -5, y: 6}
+        - {x: 5, y: 6}
+        - {x: 8, y: 8}
+        - {x: 8, y: 13}
+    - name: WeaponSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6, y: 6}
+        - {x: 4, y: 6}
+        - {x: 6, y: 7}
+        - {x: 6, y: 11}
+        - {x: 5, y: 13}
+        - {x: -5, y: 13}
+        - {x: -6, y: 11}
+    - name: WeaponSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4, y: 13}
+        - {x: -4, y: 6}
+        - {x: 2, y: 6}
+        - {x: 4, y: 8}
+        - {x: 4, y: 11}
+        - {x: 3, y: 13}
+    - name: WeaponSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6, y: 13}
+        - {x: -9, y: 10}
+        - {x: -9, y: 8}
+        - {x: -7, y: 6}
+        - {x: 6, y: 6}
+        - {x: 9, y: 7}
+        - {x: 9, y: 10}
+        - {x: 6, y: 13}
+    - name: WeaponSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3, y: 10}
+        - {x: -5, y: 7}
+        - {x: -5, y: 0}
+        - {x: 5, y: 0}
+        - {x: 5, y: 4}
+        - {x: 3, y: 10}
+    - name: WeaponSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4, y: 8}
+        - {x: -4, y: 0}
+        - {x: 4, y: 0}
+        - {x: 4, y: 7}
+        - {x: 3, y: 10}
+        - {x: -2, y: 10}
+    - name: WeaponSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 10}
+        - {x: -5, y: 8}
+        - {x: -6, y: 3}
+        - {x: -6, y: 0}
+        - {x: 6, y: 0}
+        - {x: 6, y: 6}
+        - {x: 3, y: 10}
+    - name: WeaponSpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3, y: 8}
+        - {x: -3, y: 0}
+        - {x: 3, y: 0}
+        - {x: 3, y: 8}
+        - {x: 1, y: 10}
+        - {x: -1, y: 10}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
