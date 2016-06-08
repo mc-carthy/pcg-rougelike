@@ -29,10 +29,18 @@ public class BoardManager : MonoBehaviour
 	public GameObject[] outerWallTiles;
 	public GameObject chestTile;
 	public GameObject exit;
+	public GameObject enemy;
 	private Transform boardHolder;
 	private Dictionary<Vector2, Vector2> gridPositions = new Dictionary<Vector2, Vector2>();
 	private Transform dungeonBoardHolder;
 	private Dictionary<Vector2, Vector2> dungeonGridPositions;
+
+	public bool checkValidTile(Vector2 pos) {
+		if (gridPositions.ContainsKey (pos)) {
+			return true;
+		}
+		return false;
+	}
 
 	public void BoardSetup() {
 		boardHolder = new GameObject ("Board").transform;
@@ -63,13 +71,16 @@ public class BoardManager : MonoBehaviour
 				toInstantiate = wallTiles [Random.Range (0, wallTiles.Length)];
 				instance = Instantiate (toInstantiate, new Vector3 (tileToAdd.x, tileToAdd.y, 0f), Quaternion.identity) as GameObject;
 				instance.transform.SetParent (boardHolder);
-			}
-
-			if (Random.Range (0, 100) == 1) {
+			} else if (Random.Range (0, 100) == 1) {
 				toInstantiate = exit;
 				instance = Instantiate (toInstantiate, new Vector3 (tileToAdd.x, tileToAdd.y, 0f), Quaternion.identity) as GameObject;
 				instance.transform.SetParent (boardHolder);
+			} else if (Random.Range(0, 20) == GameManager.instance.enemySpawnRatio) {
+				toInstantiate = enemy;
+				instance = Instantiate (toInstantiate, new Vector3 (tileToAdd.x, tileToAdd.y, 0f), Quaternion.identity) as GameObject;
+				//instance.transform.SetParent (boardHolder);
 			}
+
 		}
 	}
 
@@ -130,6 +141,10 @@ public class BoardManager : MonoBehaviour
 
 			if (tile.Value == TileType.chest) {
 				toInstantiate = chestTile;
+				instance = Instantiate (toInstantiate, new Vector3 (tile.Key.x, tile.Key.y, 0f), Quaternion.identity) as GameObject;
+				//instance.transform.SetParent (dungeonBoardHolder);
+			} else if (tile.Value == TileType.enemy) {
+				toInstantiate = enemy;
 				instance = Instantiate (toInstantiate, new Vector3 (tile.Key.x, tile.Key.y, 0f), Quaternion.identity) as GameObject;
 				//instance.transform.SetParent (dungeonBoardHolder);
 			}

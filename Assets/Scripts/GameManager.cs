@@ -10,11 +10,16 @@ public class GameManager : MonoBehaviour
 	public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
 	[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
 
+	public bool enemiesFaster = false;
+	public bool enemiesSmarter = false;
+	public int enemySpawnRatio = 20;
+
 	private BoardManager boardScript;
 	private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 	private bool enemiesMoving;								//Boolean to check if enemies are moving.
 	private DungeonManager dungeonScript;
 	private Player playerScript;
+	private bool playerInDungeon;
 
 
 
@@ -51,6 +56,8 @@ public class GameManager : MonoBehaviour
 		enemies.Clear();
 
 		boardScript.BoardSetup ();
+
+		playerInDungeon = false;
 	}
 	
 	//Update is called every frame.
@@ -74,34 +81,54 @@ public class GameManager : MonoBehaviour
 	}
 	
 	//Coroutine to move enemies in sequence.
-	IEnumerator MoveEnemies()
-	{
-		//While enemiesMoving is true player is unable to move.
+	IEnumerator MoveEnemies() {
 		enemiesMoving = true;
-		
-		//Wait for turnDelay seconds, defaults to .1 (100 ms).
 		yield return new WaitForSeconds(turnDelay);
-		
-		//If there are no enemies spawned (IE in first level):
-		if (enemies.Count == 0) 
-		{
-			//Wait for turnDelay seconds between moves, replaces delay caused by enemies moving when there are none.
+		if (enemies.Count == 0) {
 			yield return new WaitForSeconds(turnDelay);
 		}
+		List<Enemy> enemiesToDestroy = new List<Enemy>();
+		for (int i = 0; i < enemies.Count; i++) {
+			if (playerInDungeon) {
+				if ((!enemies[i].GetSpriteRenderer().isVisible)) {
+					if (i == enemies.Count - 1) {
+						yield return new WaitForSeconds(enemies[i].moveTime); 
+					}
+					continue;
+				}
+			} else {
+				if ((!enemies[i].GetSpriteRenderer().isVisible) || (!boardScript.checkValidTile (enemies[i].transform.position))) {
+					enemiesToDestroy.Add(enemies[i]);
+					continue;
+				}
+			}
 
+			enemies [i].MoveEnemy ();
+
+			yield return new WaitForSeconds (enemies [i].moveTime);
+		}
 		playersTurn = true;
-
-		//Enemies are done moving, set enemiesMoving to false.
 		enemiesMoving = false;
+
+		for (int i = 0; i < enemiesToDestroy.Count; i++) {
+			enemies.Remove (enemiesToDestroy[i]);
+			Destroy (enemiesToDestroy [i].gameObject);
+		}
+		enemiesToDestroy.Clear ();
 	}
 
 	public void UpdateBoard(int horizontal, int vertical) {
 		boardScript.AddToBoard (horizontal, vertical);
 	}
 
+	public void AddEnemyToList(Enemy script) {
+		enemies.Add (script);
+	}
 
-
-
+	public void RemoveEnemyFromList(Enemy script) {
+		enemies.Remove (script);
+	}
+		
 
 
 
@@ -117,10 +144,18 @@ public class GameManager : MonoBehaviour
 		dungeonScript.StartDungeon ();
 		boardScript.SetDungeonBoard (dungeonScript.gridPositions, dungeonScript.maxBound, dungeonScript.endPos);
 		playerScript.dungeonTransition = false;
+		playerInDungeon = true;
+
+		for (int i = 0; i < enemies.Count; i++) {
+			Destroy (enemies [i].gameObject);
+		}
+		enemies.Clear ();
 	}
 
 	public void ExitDungeon() {
 		boardScript.SetWorldBoard ();
 		playerScript.dungeonTransition = false;
+		playerInDungeon = false;
+		enemies.Clear();
 	}
 }

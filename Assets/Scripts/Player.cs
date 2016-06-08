@@ -68,11 +68,31 @@ public class Player : MovingObject
 		//Check if we have a non-zero value for horizontal or vertical
 		if(horizontal != 0 || vertical != 0) {
 			if (!dungeonTransition) {
-				if (onWorldBoard) {
+				Vector2 start = transform.position;
+				Vector2 end = start + new Vector2 (horizontal, vertical);
+				base.boxCollider.enabled = false;
+				RaycastHit2D hit = Physics2D.Linecast (start, end, base.blockingLayer);
+				if (hit.transform != null) {
+					switch (hit.transform.gameObject.tag) {
+					case("Wall"):
+						canMove = AttemptMove<Wall> (horizontal, vertical);
+						break;
+					case("Chest"):
+						canMove = AttemptMove<Chest> (horizontal, vertical);
+						break;
+					case("Enemy"):
+						canMove = AttemptMove<Enemy> (horizontal, vertical);
+						break;
+					}
+				} else {
+					canMove = AttemptMove<Wall> (horizontal, vertical);
+				}
+
+				/*if (onWorldBoard) {
 					canMove = AttemptMove<Wall> (horizontal, vertical);
 				} else {
 					canMove = AttemptMove<Chest> (horizontal, vertical);
-				}
+				}*/
 
 				if (canMove && onWorldBoard) {
 					position.x += horizontal;
@@ -80,6 +100,18 @@ public class Player : MovingObject
 					GameManager.instance.UpdateBoard (horizontal, vertical);
 				}
 			}
+		}
+	}
+
+	public void AdaptDifficulty() {
+		if (wallDamage >= 10) {
+			GameManager.instance.enemiesSmarter = true;
+		}
+		if (wallDamage >= 15) {
+			GameManager.instance.enemiesFaster = true;
+		}
+		if (wallDamage >= 20) {
+			GameManager.instance.enemySpawnRatio = 10;
 		}
 	}
 	
@@ -105,7 +137,6 @@ public class Player : MovingObject
 	//OnCantMove overrides the abstract function OnCantMove in MovingObject.
 	//It takes a generic parameter T which in the case of Player is a Wall which the player can attack and destroy.
 	protected override void OnCantMove <T> (T component) {
-		print (typeof(T));
 		if (typeof(T) == typeof(Wall)) {
 			Wall blockingObj = component as Wall;
 		
@@ -115,6 +146,9 @@ public class Player : MovingObject
 			Chest blockingObj = component as Chest;
 			print ("OPEN!");
 			blockingObj.Open ();
+		} else if (typeof(T) == typeof(Enemy)) {
+			Enemy blockingObj = component as Enemy;
+			blockingObj.DamageEnemy (wallDamage);
 		}
 		//Set the attack trigger of the player's animation controller in order to play the player's attack animation.
 		animator.SetTrigger ("playerChop");
@@ -209,7 +243,7 @@ public class Player : MovingObject
 			healthText.text = "Health: " + health;
 		}
 	}
-
+		
 	private void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Exit") {
 			dungeonTransition = true;
@@ -221,6 +255,7 @@ public class Player : MovingObject
 		} else if (other.tag == "Item") {
 			UpdateInventory (other);
 			Destroy (other.gameObject);
+			AdaptDifficulty ();
 		} else if (other.tag == "Weapon") {
 			if (weapon) {
 				Destroy (transform.GetChild (0).gameObject);
@@ -235,6 +270,7 @@ public class Player : MovingObject
 			weaponComp1.sprite = weapon.getComponentImage (0);
 			weaponComp2.sprite = weapon.getComponentImage (1);
 			weaponComp3.sprite = weapon.getComponentImage (2);
+			AdaptDifficulty ();
 		}
 	}
 }
