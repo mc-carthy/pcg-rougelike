@@ -123,10 +123,14 @@ public class GameManager : MonoBehaviour
 
 	public void AddEnemyToList(Enemy script) {
 		enemies.Add (script);
+		SoundManager.instance.FormAudio (true);
 	}
 
 	public void RemoveEnemyFromList(Enemy script) {
 		enemies.Remove (script);
+		if (enemies.Count == 0) {
+			SoundManager.instance.FormAudio (false);
+		}
 	}
 		
 
@@ -157,5 +161,7 @@ public class GameManager : MonoBehaviour
 		playerScript.dungeonTransition = false;
 		playerInDungeon = false;
 		enemies.Clear();
+
+		SoundManager.instance.FormAudio (false);
 	}
 }
